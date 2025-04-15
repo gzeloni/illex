@@ -24,9 +24,9 @@ def load_functions(package_path):
     dirs_to_process = [(base_dir, package_path)]
 
     cwd = os.getcwd()
-    ext_dir = os.path.join(cwd, 'extensions')
+    ext_dir = os.path.join(cwd, 'illex_extensions')
     if os.path.isdir(ext_dir):
-        dirs_to_process.append((ext_dir, 'extensions'))
+        dirs_to_process.append((ext_dir, 'illex_extensions'))
 
     for root_dir, pkg_prefix in dirs_to_process:
         for root, dirs, files in os.walk(root_dir):

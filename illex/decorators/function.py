@@ -20,22 +20,24 @@ def load_functions(package_path):
 
     package = importlib.import_module(package_path)
     base_dir = os.path.dirname(package.__file__)
-    base_package = package_path
 
-    for root, dirs, files in os.walk(base_dir):
-        dirs[:] = [d for d in dirs if not d.startswith('_')]
+    dirs_to_process = [(base_dir, package_path)]
 
-        rel_path = os.path.relpath(root, base_dir)
-        if rel_path == '.':
-            current_package = base_package
-        else:
-            current_package = f"{base_package}.{rel_path.replace(os.path.sep, '.')}"
+    cwd = os.getcwd()
+    ext_dir = os.path.join(cwd, 'extensions')
+    if os.path.isdir(ext_dir):
+        dirs_to_process.append((ext_dir, 'extensions'))
 
-        for file in files:
-            if file.endswith('.py') and file != '__init__.py':
+    for root_dir, pkg_prefix in dirs_to_process:
+        for root, dirs, files in os.walk(root_dir):
+            dirs[:] = [d for d in dirs if not d.startswith('_')]
+
+            rel_path = os.path.relpath(root, root_dir)
+            current_pkg = pkg_prefix if rel_path == '.' else f"{pkg_prefix}.{rel_path.replace(os.sep, '.')}"
+
+            for file in [f for f in files if f.endswith('.py') and f != '__init__.py']:
+                module_name = f"{current_pkg}.{file[:-3]}"
                 file_path = os.path.join(root, file)
-
-                module_name = f"{current_package}.{file[:-3]}"
 
                 try:
                     spec = importlib.util.spec_from_file_location(
@@ -44,4 +46,4 @@ def load_functions(package_path):
                     sys.modules[module_name] = module
                     spec.loader.exec_module(module)
                 except Exception as e:
-                    raise FunctionLoadException(f"Error importing {module_name}: {e}")
+                    raise Exception(f"Error importing {module_name}: {e}")

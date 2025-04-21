@@ -4,8 +4,12 @@ from illex.decorators.multi_param import multi_param_function
 
 @function("replace")
 @multi_param_function
-def replace(value: str, delimiter: str, substitute: str) -> str:
+def handle_replace(value: str, delimiter: str, substitute: str) -> str:
     try:
-        return value.replace(delimiter, substitute)
-    except (ValueError, TypeError, Exception):
-        return f"[Replace error: replace expects 3 values.]"
+        if delimiter.strip() == "":
+            delimiter = " "
+        parts = value.split(delimiter)
+        result = substitute.join(parts)
+        return result
+    except Exception as e:
+        return f"[Replace error: {str(e)}]"

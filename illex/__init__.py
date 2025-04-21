@@ -41,12 +41,13 @@ Usage:
     >>> illex.parse("@x = 10\nResult: @x * 2", {})
     'Result: 20'
 
-Version: 0.1.0  
+Version: 0.1.2  
 Author: Gustavo Zeloni  
 """
 
 
 from illex.parser.parse import parse
+from illex.core.variables import variables
 from illex import builtins, decorators, parser
 from illex.decorators.function import load_functions
 
@@ -55,4 +56,11 @@ load_functions('illex.builtins')
 
 
 __version__ = "1.0.0"
-__all__ = ["builtins", "decorators", "parser", "parse", "__version__"]
+__all__ = [
+    "builtins",
+    "decorators",
+    "parser",
+    "parse",
+    "variables",
+    "__version__"
+]

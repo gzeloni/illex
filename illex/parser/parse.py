@@ -10,7 +10,7 @@ from illex.parser.steps import (
 
 def parse(text: str, params: dict = {}) -> Any:
     """Main expression parser using state machine"""
-    variables: Dict[str, Any] = {}
+    from illex import variables
 
     # Phase 0: Substitute placeholders with regex
     text = substitute_placeholders(text, params)

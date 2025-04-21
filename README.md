@@ -52,7 +52,7 @@ illex.parse(text, {})
 ### Variables
 - Assignment: `@variable = value`
 - Reference: `@variable`
-- List/Dictionary access: `@list[0]`, `@dict["key"]`, `@dict.key`
+- List/Dictionary access: `@list[0]`, `@dict["key"]`, `@dict[key]`
 
 ### Built-in Functions
 Functions are called with the `:` prefix followed by the function name and arguments in parentheses.
@@ -248,4 +248,4 @@ This program is free software: you can redistribute it and/or modify it under th
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-Full license text: https://www.gnu.org/licenses/gpl-3.0.html
+Full license text: https://github.com/gzeloni/illex/blob/main/LICENSE

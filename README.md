@@ -124,27 +124,64 @@ illex run file.illex -o  # Saves to file.illex.out
 
 ## Extensibility
 
-### Creating New Handlers
+## Creating New Handlers
 
 ```python
-from illex.decorators.handler import handler
+from illex.decorators.function import function
 
-@handler("my_function")
+@function("my_function")
 def my_function(text):
     return text.upper()
 ```
 
-### Creating Math Functions
+## Creating Math Functions
 
 ```python
-from illex.decorators.handler import handler
+from illex.decorators.function import function
 from illex.decorators.math import math_function
 
-@handler("square")
+@function("square")
 @math_function
 def square(value):
     return value ** 2
 ```
+
+## Decorator Structure
+
+ILLEX provides several decorators to simplify extension:
+
+- `@function(tag)`: Registers a function with a specific tag
+- `@math_function`: Processes mathematical expressions using SymPy
+- `@multi_param_function`: Handles functions that accept multiple parameters
+
+## Full Example
+
+```python
+from illex.decorators.function import function
+from illex.decorators.multi_param import multi_param_function
+
+@function("greeting")
+@multi_param_function
+def greeting(name, message="Hello"):
+    return f"{message}, {name}!"
+
+# Usage:
+# :greeting("John")  # Result: "Hello, John!"
+# :greeting("John", "Welcome")  # Result: "Welcome, John!"
+```
+
+## Modifying Existing Handlers
+
+```python
+from illex.registry import registry
+
+# Replace an existing handler
+registry["uppercase"] = my_new_uppercase_function
+```
+
+## Automatic Extension Loading
+
+ILLEX automatically looks for extensions in the `illex_extensions` directory in the current working directory, making it easy to distribute plugins.
 
 ## Advanced Examples
 
